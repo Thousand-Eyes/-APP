@@ -4,16 +4,24 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>CodeTransmute - Universal Code Visualizer</title>
-    <script src="https://cdn.tailwindcss.com"></script>
     
-    <!-- Load Blockly: Core, Standard Blocks, JS Generator, English Messages -->
-    <script src="https://unpkg.com/blockly/blockly_compressed.js"></script>
-    <script src="https://unpkg.com/blockly/blocks_compressed.js"></script>
-    <script src="https://unpkg.com/blockly/javascript_compressed.js"></script>
-    <script src="https://unpkg.com/blockly/msg/en.js"></script>
-
+    <!-- Load Tailwind via CDN is removed in favor of PostCSS build, 
+         but keeping it here as a fallback or if user prefers CDN mode with Vite 
+         (though PostCSS is better). 
+         Actually, let's use the built-in Tailwind via PostCSS defined in package.json. 
+         But we need to inject the styles.
+         For simplicity in this transition, we will keep the CDN for Tailwind if the user 
+         doesn't set up a global css file, OR we rely on the tailwind.config.js 
+         which requires a CSS entry. 
+         
+         To make it "just work" with the provided files without creating a index.css,
+         we will keep the CDN script for Tailwind specifically for this instant, 
+         BUT point to the standard script for the App entry.
+    -->
+    <script src="https://cdn.tailwindcss.com"></script>
     <script>
-      tailwind.config = {
+       // Load config from window if needed by CDN, though tailwind.config.js handles the build.
+       tailwind.config = {
         theme: {
           extend: {
             colors: {
@@ -27,6 +35,13 @@
         }
       }
     </script>
+    
+    <!-- Load Blockly: Core, Standard Blocks, JS Generator, English Messages -->
+    <script src="https://unpkg.com/blockly/blockly_compressed.js"></script>
+    <script src="https://unpkg.com/blockly/blocks_compressed.js"></script>
+    <script src="https://unpkg.com/blockly/javascript_compressed.js"></script>
+    <script src="https://unpkg.com/blockly/msg/en.js"></script>
+
     <style>
       /* Custom scrollbar for dark theme */
       ::-webkit-scrollbar {
@@ -47,17 +62,17 @@
   <script type="importmap">
 {
   "imports": {
-    "react": "https://esm.sh/react@18.2.0?dev",
-    "react-dom/client": "https://esm.sh/react-dom@18.2.0/client?dev",
-    "react-dom": "https://esm.sh/react-dom@18.2.0?dev",
-    "react/jsx-runtime": "https://esm.sh/react@18.2.0/jsx-runtime?dev",
+    "react": "https://esm.sh/react@^19.2.4",
     "react-dom/": "https://esm.sh/react-dom@^19.2.4/",
-    "react/": "https://esm.sh/react@^19.2.4/"
+    "react/": "https://esm.sh/react@^19.2.4/",
+    "@vitejs/plugin-react": "https://esm.sh/@vitejs/plugin-react@^5.1.4",
+    "vite": "https://esm.sh/vite@^7.3.1"
   }
 }
 </script>
 </head>
   <body class="bg-gray-950 text-gray-100 overflow-hidden">
     <div id="root"></div>
+    <script type="module" src="/index.tsx"></script>
   </body>
 </html>
