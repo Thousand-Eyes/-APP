@@ -1,0 +1,5 @@
+{
+  "name": "CodeTransmute",
+  "description": "A universal code-to-blockly translator and project visualizer. Converts local source code into abstract visual blocks for architectural review and refactoring.",
+  "requestFramePermissions": []
+}
